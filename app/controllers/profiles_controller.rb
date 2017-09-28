@@ -64,7 +64,8 @@ class ProfilesController < ApplicationController
     def set_profile
       # Looking at someone else’s profile
       if params[:id]
-        @profile = Profile.find(params[:id])
+        # @profile = Profile.find(params[:id])
+        @profile = Profile.find_by!(user_id: params[:id])
       # Current user’s profile
       else
         @profile = Profile.find_by(user: current_user)
@@ -78,10 +79,13 @@ class ProfilesController < ApplicationController
 
     def is_follow_action?
       # params.require(:user)[:follow].present?
-      if params[:user]
-        params.require(:user)[:follow].present?
-      else
-        params.require(:profile)[:follow].present?
-      end
+      # if params[:user]
+      #   params.require(:user)[:follow].present?
+      # else
+      #   params.require(:profile)[:follow].present?
+      # end
+
+      # params[:user] ? params.require(:user)[:follow].present? : params.require(:profile)[:follow].present?
+      params.require( params[:user] ? :user : :profile )[:follow].present?
     end
 end
