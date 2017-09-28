@@ -77,6 +77,11 @@ class ProfilesController < ApplicationController
     end
 
     def is_follow_action?
-      params.require(:user)[:follow].present?
+      # params.require(:user)[:follow].present?
+      if params[:user]
+        params.require(:user)[:follow].present?
+      else
+        params.require(:profile)[:follow].present?
+      end
     end
 end
