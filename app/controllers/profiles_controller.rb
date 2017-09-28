@@ -10,6 +10,7 @@ class ProfilesController < ApplicationController
 
   # GET /profiles/1/edit
   def edit
+    # Perform new profile creation if it doesn't exist. Otherwise, edits the profile
     @profile = Profile.find_or_initialize_by(user: current_user)
   end
 
