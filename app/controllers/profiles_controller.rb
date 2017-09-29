@@ -35,7 +35,7 @@ class ProfilesController < ApplicationController
   # PATCH/PUT /profiles/1.json
   def update
     respond_to do |format|
-      if is_follow_action?
+      if performing_follow?
         @profile.user.toggle_followed_by(current_user)
         format.html { redirect_to @profile.user }
         format.json { render :show, status: :ok, location: @profile }
@@ -68,7 +68,8 @@ class ProfilesController < ApplicationController
         @profile = Profile.find_by!(user_id: params[:id])
       # Current user’s profile
       else
-        @profile = Profile.find_by(user: current_user)
+        # @profile = Profile.find_by(user: current_user)
+        @profile = Profile.find_by!(user: current_user)
       end
     end
 
@@ -77,7 +78,7 @@ class ProfilesController < ApplicationController
       params.require(:profile).permit(:username, :name, :bio)
     end
 
-    def is_follow_action?
+    def performing_follow?
       # params.require(:user)[:follow].present?
       # if params[:user]
       #   params.require(:user)[:follow].present?
@@ -86,6 +87,6 @@ class ProfilesController < ApplicationController
       # end
 
       # params[:user] ? params.require(:user)[:follow].present? : params.require(:profile)[:follow].present?
-      params.require( params[:user] ? :user : :profile )[:follow].present?
+      params.require( params[:user] ? :user : :profile )[:toggle_follow].present?
     end
 end
