@@ -32,4 +32,23 @@ class User < ApplicationRecord
       followers << user
     end
   end
+
+  # Top 10 Trending Users
+  # def trending_users
+  #   self.all
+  # end
+
+  scope :trending_users, ->{
+    order(followers: :desc)
+    limit(10)
+  }
+
+    # select("songs.id, songs.name, artist_id, count(play_counts.id) AS play_count").
+    # joins(:play_count).
+    # joins(:artist).
+    # group("songs.id").
+    # order("play_count DESC").
+    # limit(10)
+  # }
+
 end

@@ -1,0 +1,7 @@
+<div class="container trending-users">
+    <h1>Trending Users</h1>
+    <br>
+    <% @users.each do |user| %>
+        <h2><strong><%= user.profile.username %></strong> - <%= pluralize(user.followers.count, "follower") %></h2>
+    <% end %>
+</div>
