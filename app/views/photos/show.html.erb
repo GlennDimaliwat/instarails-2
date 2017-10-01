@@ -1,7 +1,7 @@
 <p id="notice"><%= notice %></p>
 
 <p>
-  <%= image_tag @photo.image.url, class: 'img-fluid' %>
+  <%= image_tag @photo.image.url, class: 'img-fluid', width: 800 %>
 </p>
 
 <!-- Like button -->
@@ -25,4 +25,4 @@
   <%= link_to 'Edit', edit_photo_path(@photo) %> ·
   <%= link_to 'Destroy', @photo, method: :delete, data: { confirm: 'Are you sure?' } %> ·
 <% end %>
-<%= link_to 'Back', photos_path %>
+<%= link_to 'Back', :back %>
