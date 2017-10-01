@@ -8,7 +8,7 @@ Rails.application.routes.draw do
     resources :comments
   end
   
-  get 'trending_users/index'
+  get 'trending_users/index', as: "trending_users"
   
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end

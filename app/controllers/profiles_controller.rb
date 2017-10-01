@@ -68,8 +68,8 @@ class ProfilesController < ApplicationController
         @profile = Profile.find_by!(user_id: params[:id])
       # Current user’s profile
       else
-        # @profile = Profile.find_by(user: current_user)
-        @profile = Profile.find_by!(user: current_user)
+        @profile = Profile.find_by(user: current_user)
+        # @profile = Profile.find_by!(user: current_user)
       end
     end
 

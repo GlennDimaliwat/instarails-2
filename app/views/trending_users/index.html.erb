@@ -2,6 +2,11 @@
     <h1>Trending Users</h1>
     <br>
     <% @users.each do |user| %>
-        <h2><strong><%= user.profile.username %></strong> - <%= pluralize(user.followers.count, "follower") %></h2>
+        <h2><strong><%= link_to user.profile.username, user %></strong> - <%= pluralize(user.followers.count, "follower") %></h2>
     <% end %>
+
+    <nav>
+        <br><br>
+        <%= link_to 'Back to Home', root_path, class: 'btn btn-primary'%>
+    </nav>
 </div>
