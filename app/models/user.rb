@@ -36,8 +36,8 @@ class User < ApplicationRecord
   # Top 10 Trending Users
   scope :trending_users, ->{
     left_joins(:followers)
-    .group("users.id")
-    .order("count(followers.follower_id) DESC")
+    .group('users.id')
+    .order('count(followers.follower_id) DESC')
     .limit(10)
   }
 
