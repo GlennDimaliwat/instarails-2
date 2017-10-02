@@ -41,4 +41,8 @@ class User < ApplicationRecord
     .limit(10)
   }
 
+  def photo_feed
+    Photo.where(user: self.following).order(created_at: :desc)
+  end
+
 end
