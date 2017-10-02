@@ -1,6 +1,6 @@
 class ProfilesController < ApplicationController
   before_action :authenticate_user!
-  before_action :set_profile, only: [:show, :update, :destroy]
+  before_action :set_profile, only: [:show, :edit, :update, :destroy]
 
   # GET /profiles/1
   # GET /profiles/1.json
@@ -11,7 +11,10 @@ class ProfilesController < ApplicationController
   # GET /profiles/1/edit
   def edit
     # Perform new profile creation if it doesn't exist. Otherwise, edits the profile
-    @profile = Profile.find_or_initialize_by(user: current_user)
+    # @profile = Profile.find_or_initialize_by(user: current_user)
+
+    # Have blank profile if the user hasn't created one yet for their account
+    @profile = Profile.new(user: current_user) if @profile.nil?
   end
 
   # POST /profiles
@@ -40,7 +43,7 @@ class ProfilesController < ApplicationController
         format.html { redirect_to @profile.user }
         format.json { render :show, status: :ok, location: @profile }
       elsif @profile.update(profile_params)
-        format.html { redirect_to @profile, notice: 'Profile was successfully updated.' }
+        format.html { redirect_to profile_path, notice: 'Profile was successfully updated.' }
         format.json { render :show, status: :ok, location: @profile }
       else
         format.html { render :edit }
@@ -87,6 +90,7 @@ class ProfilesController < ApplicationController
       # end
 
       # params[:user] ? params.require(:user)[:follow].present? : params.require(:profile)[:follow].present?
-      params.require( params[:user] ? :user : :profile )[:toggle_follow].present?
+      # params.require( params[:user] ? :user : :profile )[:toggle_follow].present?
+      params.dig(:user, :toggle_follow).present?
     end
 end
