@@ -1,5 +1,5 @@
 class ProfilesController < ApplicationController
-  before_action :authenticate_user!
+  before_action :authenticate_user!, only: [:edit, :update, :destroy] # Still allow users to see page if not signed in except for edit, update, delete
   before_action :set_profile, only: [:show, :edit, :update, :destroy]
 
   # GET /profiles/1
