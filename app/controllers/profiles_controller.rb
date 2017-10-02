@@ -38,13 +38,22 @@ class ProfilesController < ApplicationController
   # PATCH/PUT /profiles/1.json
   def update
     respond_to do |format|
+
+      # User performs follow / unfollow
       if performing_follow?
         @profile.user.toggle_followed_by(current_user)
         format.html { redirect_to @profile.user }
         format.json { render :show, status: :ok, location: @profile }
+
+      # One does not simply edit the profile of another user
+      elsif @profile.nil? || @profile.user != current_user
+        redirect_to root_url
+
+      # User updates his profile
       elsif @profile.update(profile_params)
         format.html { redirect_to profile_path, notice: 'Profile was successfully updated.' }
         format.json { render :show, status: :ok, location: @profile }
+
       else
         format.html { render :edit }
         format.json { render json: @profile.errors, status: :unprocessable_entity }
